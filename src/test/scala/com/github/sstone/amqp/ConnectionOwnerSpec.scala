@@ -1,22 +1,22 @@
 package com.github.sstone.amqp
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.WordSpecLike
+import org.scalatest.{Matchers, WordSpecLike}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import akka.testkit.{ImplicitSender, TestKit, TestProbe}
 import akka.actor.ActorSystem
 import akka.pattern.gracefulStop
 import akka.util.Timeout
+
 import concurrent.duration._
 import concurrent.Await
-import com.rabbitmq.client.{ConnectionFactory, Address, Channel}
+import com.rabbitmq.client.{Address, Channel, ConnectionFactory}
 import Amqp._
 import ConnectionOwner.{Connected, CreateChannel, Disconnected}
 import java.util.concurrent.TimeUnit
 
 @RunWith(classOf[JUnitRunner])
-class ConnectionOwnerSpec extends TestKit(ActorSystem("TestSystem")) with WordSpecLike with ShouldMatchers with ImplicitSender {
+class ConnectionOwnerSpec extends TestKit(ActorSystem("TestSystem")) with WordSpecLike with Matchers with ImplicitSender {
   implicit val timeout = Timeout(5 seconds)
 
   "ConnectionOwner" should {

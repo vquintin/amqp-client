@@ -23,7 +23,7 @@ libraryDependencies := {
         "com.typesafe.akka"    %% "akka-actor"          % akkaVersion % "provided",
         "com.typesafe.akka"    %% "akka-slf4j"          % akkaVersion % "test",
         "com.typesafe.akka"    %% "akka-testkit"        % akkaVersion % "test",
-        "org.scalatest"        %% "scalatest"           % "2.2.5" % "test",
+        "org.scalatest"        %% "scalatest"           % "3.0.0" % "test",
         "ch.qos.logback"       %  "logback-classic"     % "1.1.2" % "test",
         "junit"           	   % "junit"                % "4.12" % "test"
     )

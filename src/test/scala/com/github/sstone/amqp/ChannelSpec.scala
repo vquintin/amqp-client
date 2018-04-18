@@ -1,22 +1,27 @@
 package com.github.sstone.amqp
 
-import akka.testkit.{ImplicitSender, TestKit}
-import akka.actor.{ActorRef, Props, ActorSystem}
-import akka.util.Timeout
-import akka.pattern.{ask, gracefulStop}
-import org.scalatest.{BeforeAndAfter, WordSpecLike}
-import org.scalatest.matchers.ShouldMatchers
 import java.util.concurrent.TimeUnit
+
+import akka.actor.{ActorRef, ActorSystem}
+import akka.pattern.gracefulStop
+import akka.testkit.{ImplicitSender, TestKit}
+import akka.util.Timeout
+import com.github.sstone.amqp.Amqp._
+import com.rabbitmq.client.ConnectionFactory
+import org.scalatest.{BeforeAndAfter, Matchers, WordSpecLike}
+
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import com.rabbitmq.client.ConnectionFactory
-import com.github.sstone.amqp.Amqp._
 import scala.util.Random
 
-class ChannelSpec extends TestKit(ActorSystem("TestSystem")) with WordSpecLike with ShouldMatchers with BeforeAndAfter with ImplicitSender {
+class ChannelSpec extends TestKit(ActorSystem("TestSystem")) with WordSpecLike with Matchers with BeforeAndAfter with ImplicitSender {
   implicit val timeout = Timeout(5 seconds)
   val connFactory = new ConnectionFactory()
-  val uri = system.settings.config.getString("amqp-client-test.rabbitmq.uri")
+
+  val uri = sys.env.get("RABBITMQ_HOST").map(h => s"amqp://mics:1234@${h}:5672").getOrElse(
+    system.settings.config.getString("amqp-client-test.rabbitmq.uri"))
+
+  println(s"===> using uri $uri")
   connFactory.setUri(uri)
   var conn: ActorRef = _
   var channelOwner: ActorRef = _

@@ -2,3 +2,8 @@
 *.iml
 target/
 project/target
+.coursier
+.ivy2
+.sbt
+.sbtopts
+result
